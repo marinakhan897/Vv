@@ -1,3 +1,63 @@
+
+## 🦾 Fork Version: What’s Different?
+
+This fork is a lightweight, modernized version of Goat-Bot-V2:
+
+- Removed all verification, Google APIs, and dashboard features—only `/uptime` API remains.
+- Uses [nexus-fca](https://github.com/tas33n/nexus-fca) for Facebook integration.
+- Cleaned up config files and dependencies for simplicity.
+- Codebase is easier to read and extend.
+
+---
+
+## 🚀 Running the Bot
+
+You only need to provide **login info** — either via a **cookie file** or **email/password** — and you’re good to go.
+
+### 1. Clone & Install
+
+```bash
+git clone https://github.com/tas33n/Goat-Bot-V2.git
+cd Goat-Bot-V2
+npm install
+```
+
+### 2. Choose your login method
+
+#### 🔑 Option A: Using `cookiex.txt`
+
+* Place your **Facebook cookies or appstate** inside a file named `account.txt` at the root of the project.
+* The bot will automatically load it.
+
+#### 📧 Option B: Using `config.json`
+
+Edit the `config.json` file and fill in your Facebook account info:
+
+```json
+{
+  "facebookAccount": {
+    "email": "your_fb_email",
+    "password": "your_fb_password",
+    "twofactor": "123456",
+	...
+  }
+}
+```
+
+* `email` + `password` are required.
+* `twofactor` is optional — add if your account has 2FA enabled.
+
+### 3. Start the bot
+
+```bash
+npm start
+```
+
+That’s it 🎉 The bot should now be running.
+
+---
+unquote readme
+---
 <img src="https://i.ibb.co/RQ28H2p/banner.png" alt="banner">
 <h1 align="center"><img src="./dashboard/images/logo-non-bg.png" width="22px"> Goat Bot - Bot Chat Messenger</h1>
 
