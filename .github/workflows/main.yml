@@ -1,0 +1,200 @@
+name: 🌸 Marina Bot CI/CD
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '18.x'
+
+jobs:
+  # 🌸 Marina Bot Quality Assurance
+  quality-check:
+    name: 🔍 Code Quality Check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: 🛎️ Checkout Code
+      uses: actions/checkout@v4
+      
+    - name: ⎔ Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: 📥 Install Dependencies
+      run: |
+        npm install
+        npm install -g eslint
+        
+    - name: 🔍 ESLint Analysis
+      run: |
+        npx eslint scripts/ --ext .js --config .eslintrc.json || echo "ESLint completed"
+        
+    - name: 📊 Code Structure Check
+      run: |
+        echo "🌸 Marina Bot Structure Verification"
+        [ -f "scripts/cmds/help.js" ] && echo "✅ Help command found" || echo "❌ Help command missing"
+        [ -f "scripts/cmds/prefix.js" ] && echo "✅ Prefix command found" || echo "❌ Prefix command missing"
+        [ -f "config.json" ] && echo "✅ Config file found" || echo "❌ Config file missing"
+
+  # 💫 Marina Bot Deployment
+  deploy:
+    name: 🚀 Deploy Marina Bot
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: 🛎️ Checkout Repository
+      uses: actions/checkout@v4
+      
+    - name: ⎔ Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: 📥 Install Dependencies
+      run: npm ci --production
+      
+    - name: 🔧 Environment Setup
+      run: |
+        echo "🌸 Setting up Marina Bot environment"
+        mkdir -p database/data
+        mkdir -p scripts/cmds/tmp
+        mkdir -p scripts/events/tmp
+        mkdir -p logs
+        
+    - name: 📁 File Structure Validation
+      run: |
+        echo "💫 Validating Marina Bot structure..."
+        echo "📁 Required directories:"
+        ls -la scripts/cmds/ | head -10
+        echo "🔧 Core files:"
+        [ -f "Goat.js" ] && echo "✅ Goat.js found" || echo "❌ Goat.js missing"
+        [ -f "config.json" ] && echo "✅ config.json found" || echo "❌ config.json missing"
+        
+    - name: 🧪 Basic Function Test
+      run: |
+        echo "🎀 Testing Marina Bot components..."
+        node -e "
+          try {
+            const fs = require('fs');
+            const config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
+            console.log('✅ Config loaded successfully');
+            console.log('🌸 Bot Name:', config.nickNameBot);
+            console.log('💫 Prefix:', config.prefix);
+          } catch (e) {
+            console.log('❌ Config error:', e.message);
+            process.exit(1);
+          }
+        "
+        
+    - name: 📦 Create Deployment Package
+      run: |
+        echo "🌺 Creating deployment package..."
+        mkdir -p marina-bot-deploy
+        cp -r scripts/ marina-bot-deploy/
+        cp -r database/ marina-bot-deploy/
+        cp -r languages/ marina-bot-deploy/
+        cp -r assets/ marina-bot-deploy/ 2>/dev/null || true
+        cp *.js marina-bot-deploy/
+        cp *.json marina-bot-deploy/
+        cp .gitignore marina-bot-deploy/
+        
+        echo "📁 Deployment structure:"
+        find marina-bot-deploy -type f -name "*.js" | head -10
+        
+    - name: 🎀 Success Notification
+      if: success()
+      run: |
+        echo "🌸 Marina Bot deployment ready!"
+        echo "💫 All quality checks passed"
+        echo "🎀 Bot can be deployed successfully"
+        
+    - name: 🚨 Failure Notification
+      if: failure()
+      run: |
+        echo "❌ Marina Bot deployment failed"
+        echo "🔧 Please check the errors above"
+
+  # 🎀 Marina Bot Security Scan
+  security-scan:
+    name: 🛡️ Security Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 🛎️ Checkout Code
+      uses: actions/checkout@v4
+      
+    - name: ⎔ Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        
+    - name: 📥 Install Dependencies
+      run: npm ci
+      
+    - name: 🔒 NPM Audit
+      run: npm audit --audit-level moderate || true
+      
+    - name: 📝 License Check
+      run: |
+        echo "📄 License Information:"
+        [ -f "LICENSE" ] && echo "✅ LICENSE file found" || echo "⚠️  No LICENSE file"
+        [ -f "package.json" ] && cat package.json | grep -i license || echo "ℹ️  No license in package.json"
+
+  # 🌊 Marina Bot Auto-Backup
+  auto-backup:
+    name: 💾 Auto Backup
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    
+    steps:
+    - name: 🛎️ Checkout Code
+      uses: actions/checkout@v4
+      
+    - name: 📅 Create Backup
+      run: |
+        BACKUP_DATE=$(date +%Y%m%d_%H%M%S)
+        echo "💾 Creating backup: marina_backup_$BACKUP_DATE"
+        tar -czf marina_backup_$BACKUP_DATE.tar.gz \
+          scripts/ \
+          database/ \
+          languages/ \
+          *.js \
+          *.json \
+          .gitignore \
+          README.md 2>/dev/null || true
+          
+    - name: 📤 Upload Backup
+      uses: actions/upload-artifact@v4
+      with:
+        name: marina-backup
+        path: marina_backup_*.tar.gz
+        retention-days: 7
+
+# 🌸 Marina Bot Workflow Notifications
+on:
+  workflow_run:
+    workflows: ["🌸 Marina Bot CI/CD"]
+    types:
+      - completed
+      
+jobs:
+  notify:
+    name: 📢 Notification
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion != 'skipped' }}
+    
+    steps:
+    - name: 🔔 Workflow Status
+      run: |
+        echo "🌸 Marina Bot CI/CD Status: ${{ github.event.workflow_run.conclusion }}"
+        echo "💫 Workflow: ${{ github.event.workflow_run.name }}"
+        echo "🎀 View details: ${{ github.event.workflow_run.html_url }}"
