@@ -1,190 +1,274 @@
 {
-	// Place your global snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
-	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
-	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
-	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
-	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
-	// Placeholders with the same ids are connected.
-	// Example:
-	// "Print to console": {
-	// 	"scope": "javascript,typescript",
-	// 	"prefix": "log",
-	// 	"body": [
-	// 		"console.log('$1');",
-	// 		"$2"
-	// 	],
-	// 	"description": "Log output to console"
-	// }
-	"Goat Bot Command": {
+	// 🌸 Marina's Beautiful Bot Snippets
+	// 💫 Elegant code templates for Marina's Bot development
+	
+	"Marina Bot Command": {
 		"scope": "javascript,typescript",
-		"prefix": "GoatBotCommandCreate",
+		"prefix": ["marinaCommand", "mbCommand"],
 		"body": [
+			"/**",
+			" * 🌸 Marina's Bot Command",
+			" * 💫 Created with love by Marina",
+			" * 🎀 Version: $2",
+			" */",
+			"",
 			"module.exports = {",
 			"\tconfig: {",
 			"\t\tname: \"$1\",",
 			"\t\tversion: \"$2\",",
-			"\t\tauthor: \"$3\",",
+			"\t\tauthor: \"Marina\",",
 			"\t\tcountDown: 5,",
 			"\t\trole: $4,",
 			"\t\tdescription: {",
-			"\t\t\tvi: \"$7\",",
-			"\t\t\ten: \"$8\"",
+			"\t\t\ten: \"🌸 $8\"",
 			"\t\t},",
 			"\t\tcategory: \"$9\",",
 			"\t\tguide: {",
-			"\t\t\tvi: \"$10\",",
-			"\t\t\ten: \"$11\"",
+			"\t\t\ten: \"💫 $11\"",
 			"\t\t}",
 			"\t},",
 			"",
 			"\tlangs: {",
-			"\t\tvi: {",
-			"\t\t\t$12",
-			"\t\t},",
 			"\t\ten: {",
 			"\t\t\t$13",
 			"\t\t}",
 			"\t},",
 			"",
 			"\tonStart: async function ({ api, args, message, event, threadsData, usersData, dashBoardData, globalData, threadModel, userModel, dashBoardModel, globalModel, role, commandName, getLang }) {",
+			"\t\t// 🌊 Marina's Command Logic",
 			"\t\t$14",
 			"\t}",
 			"};"
 		],
-		"description": "Create template for Goat Bot command"
+		"description": "🌸 Create beautiful template for Marina's Bot command"
 	},
-	"Goat Bot Command onReply": {
+
+	"Marina Bot Command with Profile Pic": {
 		"scope": "javascript,typescript",
-		"prefix": "GoatBotCommandOnReply",
+		"prefix": ["marinaCommandPic", "mbCommandPic"],
 		"body": [
-			"onReply: async function ({ Reply, api, args, message, event, threadsData, usersData, dashBoardData, globalData, threadModel, userModel, dashBoardModel, globalModel, role, commandName, getLang }) {",
+			"/**",
+			" * 🌸 Marina's Bot Command with Profile Picture",
+			" * 💫 Elegant responses with Marina's profile pic",
+			" */",
+			"",
+			"module.exports = {",
+			"\tconfig: {",
+			"\t\tname: \"$1\",",
+			"\t\tversion: \"2.0\",",
+			"\t\tauthor: \"Marina\",",
+			"\t\tcountDown: 5,",
+			"\t\trole: 0,",
+			"\t\tdescription: {",
+			"\t\t\ten: \"🌸 $2\"",
+			"\t\t},",
+			"\t\tcategory: \"utility\",",
+			"\t\tguide: {",
+			"\t\t\ten: \"💫 {pn} $3\"",
+			"\t\t}",
+			"\t},",
+			"",
+			"\tlangs: {",
+			"\t\ten: {",
+			"\t\t\tsuccess: \"🌸 $4\",",
+			"\t\t\terror: \"❌ $5\"",
+			"\t\t}",
+			"\t},",
+			"",
+			"\tonStart: async function ({ api, args, message, event, getLang }) {",
+			"\t\ttry {",
+			"\t\t\tconst marinaProfilePic = \\\"https://graph.facebook.com/61577638905771/picture?width=720&height=720\\\";",
+			"\t\t\t",
+			"\t\t\treturn await message.reply({",
+			"\t\t\t\tbody: getLang(\\\"success\\\"),",
+			"\t\t\t\tattachment: await global.utils.getStreamFromURL(marinaProfilePic)",
+			"\t\t\t});",
+			"\t\t} catch (error) {",
+			"\t\t\treturn await message.error(getLang(\\\"error\\\"));",
+			"\t\t}",
+			"\t}",
+			"};"
+		],
+		"description": "🌸 Create Marina's command with profile picture responses"
+	},
+
+	"Marina Bot Auto Reply": {
+		"scope": "javascript,typescript",
+		"prefix": ["marinaAutoReply", "mbAutoReply"],
+		"body": [
+			"/**",
+			" * 🌸 Marina's Auto Reply Command",
+			" * 💫 Beautiful automatic responses",
+			" */",
+			"",
+			"module.exports = {",
+			"\tconfig: {",
+			"\t\tname: \"$1\",",
+			"\t\tversion: \"2.0\",",
+			"\t\tauthor: \"Marina\",",
+			"\t\thasPermssion: 0,",
+			"\t\tdescription: \"🌸 $2\",",
+			"\t\tcommandCategory: \"noprefix\",",
+			"\t\tusages: \"\",",
+			"\t\tcooldowns: 5",
+			"\t},",
+			"",
+			"\thandleEvent: async function({ api, event, args, Threads, Users }) {",
+			"\t\tconst { threadID, messageID } = event;",
+			"\t\tvar name = await Users.getNameUser(event.senderID);",
+			"\t\t",
+			"\t\t// 🌊 Marina's Elegant Responses",
+			"\t\tvar marinaResponses = [",
+			"\t\t\t\\\"🌸 Hello darling! How can I help you?\\\",",
+			"\t\t\t\\\"💫 Oh my sweet friend, what brings you here?\\\",",
+			"\t\t\t\\\"🌊 Darling, you called? Tell me everything!\\\"",
+			"\t\t];",
+			"\t\tvar rand = marinaResponses[Math.floor(Math.random() * marinaResponses.length)];",
+			"\t\t",
+			"\t\tif (event.body.toLowerCase().includes(\\\"bot\\\") || event.body.toLowerCase().includes(\\\"marina\\\")) {",
+			"\t\t\treturn api.sendMessage({",
+			"\t\t\t\tbody: `🌺 ─── MARINA'S REPLY ─── 🌺\\\\n\\\\n💕 ${rand}\\\\n\\\\n🌸 User: ${name}\\\\n💫 Bot: Marina's Assistant`,",
+			"\t\t\t\tmentions: [{",
+			"\t\t\t\t\ttag: name,",
+			"\t\t\t\t\tid: event.senderID",
+			"\t\t\t\t}]",
+			"\t\t\t}, threadID, messageID);",
+			"\t\t}",
+			"\t},",
+			"",
+			"\trun: function({ api, event, client, __GLOBAL }) {}",
+			"};"
+		],
+		"description": "🌸 Create beautiful auto-reply command for Marina's Bot"
+	},
+
+	"Marina Bot Event Handler": {
+		"scope": "javascript,typescript",
+		"prefix": ["marinaEvent", "mbEvent"],
+		"body": [
+			"/**",
+			" * 🌸 Marina's Bot Event Handler",
+			" * 💫 Elegant event processing",
+			" */",
+			"",
+			"module.exports = {",
+			"\tconfig: {",
+			"\t\tname: \"$1\",",
+			"\t\tversion: \"2.0\",",
+			"\t\tauthor: \"Marina\"",
+			"\t},",
+			"",
+			"\tonStart: async function ({ usersData, threadsData, event, api, getLang }) {",
+			"\t\t// 🌊 Marina's Event Logic",
+			"\t\t$2",
+			"\t}",
+			"};"
+		],
+		"description": "🌸 Create event handler for Marina's Bot"
+	},
+
+	"Marina Bot Reply Handler": {
+		"scope": "javascript,typescript",
+		"prefix": ["marinaReply", "mbReply"],
+		"body": [
+			"// 🎀 Marina's Reply Handler",
+			"onReply: async function ({ Reply, api, message, event, getLang }) {",
 			"\tconst { $1 } = Reply;",
+			"\t// 💫 Handle user reply",
 			"\t$2",
 			"}"
 		],
-		"description": "Create template for Goat Bot command onReply"
+		"description": "🌸 Create reply handler for Marina's Bot"
 	},
-	"Goat Bot Command Set onReply": {
+
+	"Marina Bot Reaction Handler": {
 		"scope": "javascript,typescript",
-		"prefix": "GoatBotCommandSetOnReply",
+		"prefix": ["marinaReaction", "mbReaction"],
 		"body": [
+			"// ✨ Marina's Reaction Handler",
+			"onReaction: async function ({ Reaction, api, message, event, getLang }) {",
+			"\tconst { $1 } = Reaction;",
+			"\t// 💕 Handle user reaction",
+			"\t$2",
+			"}"
+		],
+		"description": "🌸 Create reaction handler for Marina's Bot"
+	},
+
+	"Marina Bot Set Reply": {
+		"scope": "javascript,typescript",
+		"prefix": ["marinaSetReply", "mbSetReply"],
+		"body": [
+			"// 🌸 Set Marina's Reply Handler",
 			"global.GoatBot.onReply.set($1.messageID, {",
 			"\tcommandName,",
 			"\t$2",
 			"});"
 		],
-		"description": "Create template for Goat Bot command set onReply"
+		"description": "🌸 Set reply handler for Marina's Bot"
 	},
-	"Goat Bot Command onReaction": {
+
+	"Marina Bot Set Reaction": {
 		"scope": "javascript,typescript",
-		"prefix": "GoatBotCommandOnReaction",
+		"prefix": ["marinaSetReaction", "mbSetReaction"],
 		"body": [
-			"onReaction: async function ({ Reaction, api, args, message, event, threadsData, usersData, dashBoardData, globalData, threadModel, userModel, dashBoardModel, globalModel, role, commandName, getLang }) {",
-			"\tconst { $1 } = Reaction;",
-			"\t$2",
-			"}"
-		],
-		"description": "Create template for Goat Bot command onReaction"
-	},
-	"Goat Bot Command Set onReaction": {
-		"scope": "javascript,typescript",
-		"prefix": "GoatBotCommandSetOnReaction",
-		"body": [
+			"// 💫 Set Marina's Reaction Handler",
 			"global.GoatBot.onReaction.set($1.messageID, {",
 			"\tcommandName,",
 			"\t$2",
 			"});"
 		],
-		"description": "Create template for Goat Bot command set onReaction"
+		"description": "🌸 Set reaction handler for Marina's Bot"
 	},
-	"Goat Bot Command onEvent": {
+
+	"Marina Bot Chat Handler": {
 		"scope": "javascript,typescript",
-		"prefix": "GoatBotCommandOnEvent",
+		"prefix": ["marinaChat", "mbChat"],
 		"body": [
-			"onReaction: async function ({ Reaction, api, args, message, event, threadsData, usersData, dashBoardData, globalData, threadModel, userModel, dashBoardModel, globalModel, role, commandName, getLang }) {",
-			"\tconst { logMessageType, logMessageData } = event;",
+			"// 🌊 Marina's Chat Handler",
+			"onChat: async function ({ api, message, event, getLang }) {",
+			"\t// 🎀 Handle chat messages",
 			"\t$1",
 			"}"
 		],
-		"description": "Create template for Goat Bot command onEvent"
+		"description": "🌸 Create chat handler for Marina's Bot"
 	},
-	"Goat Bot Command Push onEvent": {
+
+	"Marina Bot Logger": {
 		"scope": "javascript,typescript",
-		"prefix": "GoatBotCommandPushOnEvent",
+		"prefix": ["marinaLog", "mbLog"],
 		"body": [
-			"global.GoatBot.onEvent.push({",
-			"\tmessageID: $1,",
-			"\tonStart: ({ event }) => {",
-			"\t\t$2",
-			"\t}",
+			"// 🌸 Marina's Beautiful Logging",
+			"global.utils.log.marina(\\\"$1\\\");"
+		],
+		"description": "🌸 Create Marina-style logging"
+	},
+
+	"Marina Bot Error Handler": {
+		"scope": "javascript,typescript",
+		"prefix": ["marinaError", "mbError"],
+		"body": [
+			"// ❌ Marina's Error Handler",
+			"try {",
+			"\t$1",
+			"} catch (error) {",
+			"\tglobal.utils.log.marinaError(\\\"$2: \\\" + error.message);",
+			"\treturn await message.error(getLang(\\\"error\\\"));",
+			"}"
+		],
+		"description": "🌸 Create elegant error handling for Marina's Bot"
+	},
+
+	"Marina Bot Success Message": {
+		"scope": "javascript,typescript",
+		"prefix": ["marinaSuccess", "mbSuccess"],
+		"body": [
+			"// ✅ Marina's Success Message",
+			"return await message.reply({",
+			"\tbody: \\\"🌸 $1\\\",",
+			"\tattachment: await global.utils.getStreamFromURL(\\\"https://graph.facebook.com/61577638905771/picture?width=720&height=720\\\")",
 			"});"
 		],
-		"description": "Create template for Goat Bot command push onEvent"
-	},
-	"Goat Bot Command onChat": {
-		"scope": "javascript,typescript",
-		"prefix": "GoatBotCommandOnChat",
-		"body": [
-			"onChat: async function ({ api, args, message, event, threadsData, usersData, dashBoardData, globalData, threadModel, userModel, dashBoardModel, globalModel, role, commandName, getLang }) {",
-			"\t$1",
-			"}"
-		],
-		"description": "Create template for Goat Bot command onChat"
-	},
-	"Goat Bot Command Set onChat": {
-		"scope": "javascript,typescript",
-		"prefix": "GoatBotCommandSetOnChat",
-		"body": [
-			"global.GoatBot.onChat.set($1.threadID, {",
-			"\tcommandName,",
-			"\t$2",
-			"});"
-		],
-		"description": "Create template for Goat Bot command set onChat"
-	},
-	"Goat Bot Command onStart": {
-		"scope": "javascript,typescript",
-		"prefix": "GoatBotCommandOnStart",
-		"body": [
-			"onStart: async function ({ api, args, message, event, threadsData, usersData, dashBoardData, globalData, threadModel, userModel, dashBoardModel, globalModel, role, commandName, getLang }) {",
-			"\t$1",
-			"}"
-		],
-		"description": "Create template for Goat Bot command onStart"
-	},
-	"Goat Bot Event": {
-		"scope": "javascript,typescript",
-		"prefix": "GoatBotEventCreate",
-		"body": [
-			"module.exports = {",
-			"\tconfig: {",
-			"\t\tname: \"$1\",",
-			"\t\tversion: \"$3\",",
-			"\t\tauthor: \"$4\"",
-			"\t},",
-			"",
-			"\tlangs: {",
-			"\t\tvi: {",
-			"\t\t\t$7",
-			"\t\t},",
-			"\t\ten: {",
-			"\t\t\t$8",
-			"\t\t}",
-			"\t},",
-			"",
-			"\tonStart: async function ({ usersData, threadsData, event, api, getLang }) {",
-			"\t\t$9",
-			"\t}",
-			"};"
-		],
-		"description": "Create template for Goat Bot command event"
-	},
-	"Log Dev": {
-		"scope": "javascript,typescript",
-		"prefix": ["LogDev", "DevLog"],
-		"body": [
-			"global.utils.log.dev($1);"
-		],
-		"description": "Create template for log dev"
+		"description": "🌸 Create beautiful success message with Marina's profile pic"
 	}
 }
