@@ -1,3 +1,10 @@
+/**
+ * @author Marina
+ * ! Based on original utils by NTKhang
+ * ! Customized with Marina's elegant styling
+ * ! Enhanced with beautiful features
+ */
+
 const axios = require("axios");
 const fs = require("fs-extra");
 const path = require("path");
@@ -18,16 +25,18 @@ const Prism = require("./func/prism.js");
 const { config } = global.GoatBot;
 const { gmailAccount } = config.credentials;
 const { clientId, clientSecret, refreshToken, apiKey: googleApiKey } = gmailAccount;
+
+// 🌸 Marina's Enhanced Configuration Check
 if (!clientId) {
-	log.err("CREDENTIALS", `Please provide a valid clientId in file ${path.normalize(global.client.dirConfig)}`);
+	log.err("CREDENTIALS", `🌸 Please provide a valid clientId in file ${path.normalize(global.client.dirConfig)}`);
 	process.exit();
 }
 if (!clientSecret) {
-	log.err("CREDENTIALS", `Please provide a valid clientSecret in file ${path.normalize(global.client.dirConfig)}`);
+	log.err("CREDENTIALS", `🌸 Please provide a valid clientSecret in file ${path.normalize(global.client.dirConfig)}`);
 	process.exit();
 }
 if (!refreshToken) {
-	log.err("CREDENTIALS", `Please provide a valid refreshToken in file ${path.normalize(global.client.dirConfig)}`);
+	log.err("CREDENTIALS", `🌸 Please provide a valid refreshToken in file ${path.normalize(global.client.dirConfig)}`);
 	process.exit();
 }
 
@@ -37,6 +46,8 @@ const driveApi = google.drive({
 	version: 'v3',
 	auth: oauth2ClientForGGDrive
 });
+
+// 🌺 Marina's Character Set for Translation
 const word = [
 	'A', 'Á', 'À', 'Ả', 'Ã', 'Ạ', 'a', 'á', 'à', 'ả', 'ã', 'ạ',
 	'Ă', 'Ắ', 'Ằ', 'Ẳ', 'Ẵ', 'Ặ', 'ă', 'ắ', 'ằ', 'ẳ', 'ẵ', 'ặ',
@@ -75,17 +86,19 @@ const word = [
 
 const regCheckURL = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
+// 💫 Marina's Custom Error Class
 class CustomError extends Error {
 	constructor(obj) {
 		if (typeof obj === 'string')
 			obj = { message: obj };
 		if (typeof obj !== 'object' || obj === null)
-			throw new TypeError('Object required');
+			throw new TypeError('🌸 Object required');
 		obj.message ? super(obj.message) : super();
 		Object.assign(this, obj);
 	}
 }
 
+// ✨ Marina's Utility Functions
 function lengthWhiteSpacesEndLine(text) {
 	let length = 0;
 	for (let i = text.length - 1; i >= 0; i--) {
@@ -112,9 +125,10 @@ function setErrorUptime() {
 	global.statusAccountBot = 'block spam';
 	global.responseUptimeCurrent = global.responseUptimeError;
 }
+
 const defaultStderrClearLine = process.stderr.clearLine;
 
-
+// 🎀 Marina's Time Conversion Function
 function convertTime(miliSeconds, replaceSeconds = "s", replaceMinutes = "m", replaceHours = "h", replaceDays = "d", replaceMonths = "M", replaceYears = "y", notShowZero = false) {
 	if (typeof replaceSeconds == 'boolean') {
 		notShowZero = replaceSeconds;
@@ -156,16 +170,17 @@ function convertTime(miliSeconds, replaceSeconds = "s", replaceMinutes = "m", re
 	return formattedDate;
 }
 
+// 🌸 Marina's Beautiful Loading Spinner
 function createOraDots(text) {
 	const spin = new ora({
 		text: text,
 		spinner: {
 			interval: 80,
 			frames: [
-				'⠋', '⠙', '⠹',
-				'⠸', '⠼', '⠴',
-				'⠦', '⠧', '⠇',
-				'⠏'
+				'🌸', '💫', '🌊',
+				'🎀', '✨', '💕',
+				'🌺', '🥰', '💖',
+				'🌷'
 			]
 		}
 	});
@@ -180,6 +195,7 @@ function createOraDots(text) {
 	return spin;
 }
 
+// 💫 Marina's Task Queue Class
 class TaskQueue {
 	constructor(callback) {
 		this.queue = [];
@@ -211,15 +227,17 @@ function enableStderrClearLine(isEnable = true) {
 	process.stderr.clearLine = isEnable ? defaultStderrClearLine : () => { };
 }
 
+// ✨ Marina's Number Formatting
 function formatNumber(number) {
 	const regionCode = global.GoatBot.config.language;
 	if (isNaN(number))
-		throw new Error('The first argument (number) must be a number');
+		throw new Error('🌸 The first argument (number) must be a number');
 
 	number = Number(number);
 	return number.toLocaleString(regionCode || "en-US");
 }
 
+// 🎀 File Extension Functions
 function getExtFromAttachmentType(type) {
 	switch (type) {
 		case "photo":
@@ -241,15 +259,16 @@ function getExtFromMimeType(mimeType = "") {
 
 function getExtFromUrl(url = "") {
 	if (!url || typeof url !== "string")
-		throw new Error('The first argument (url) must be a string');
+		throw new Error('🌸 The first argument (url) must be a string');
 	const reg = /(?<=https:\/\/cdn.fbsbx.com\/v\/.*?\/|https:\/\/video.xx.fbcdn.net\/v\/.*?\/|https:\/\/scontent.xx.fbcdn.net\/v\/.*?\/).*?(\/|\?)/g;
 	const fileName = url.match(reg)[0].slice(0, -1);
 	return fileName.slice(fileName.lastIndexOf(".") + 1);
 }
 
+// 🌺 Marina's Prefix Function
 function getPrefix(threadID) {
 	if (!threadID || isNaN(threadID))
-		throw new Error('The first argument (threadID) must be a number');
+		throw new Error('🌸 The first argument (threadID) must be a number');
 	threadID = String(threadID);
 	let prefix = global.GoatBot.config.prefix;
 	const threadData = global.db.allThreadData.find(t => t.threadID == threadID);
@@ -258,8 +277,8 @@ function getPrefix(threadID) {
 	return prefix;
 }
 
+// 💕 Marina's Time Function
 function getTime(timestamps, format) {
-	// check if just have timestamps -> format = timestamps
 	if (!format && typeof timestamps == 'string') {
 		format = timestamps;
 		timestamps = undefined;
@@ -279,8 +298,8 @@ function isNumber(value) {
 	return !isNaN(parseFloat(value));
 }
 
+// 🌸 Marina's Colorful JSON Stringify
 function jsonStringifyColor(obj, filter, indent, level) {
-	// source: https://www.npmjs.com/package/node-json-color-stringify
 	indent = indent || 0;
 	level = level || 0;
 	let output = '';
@@ -308,8 +327,6 @@ function jsonStringifyColor(obj, filter, indent, level) {
 								return;
 					}
 
-					// if (value === undefined)
-					// 	return;
 					if (!isNaN(key[0]) || key.match(/[^a-zA-Z0-9_]/))
 						key = colors.green(JSON.stringify(key));
 
@@ -344,7 +361,7 @@ function jsonStringifyColor(obj, filter, indent, level) {
 	return output;
 }
 
-
+// 💫 Marina's Message Function
 function message(api, event) {
 	async function sendMessageError(err) {
 		if (typeof err === "object" && !err.stack)
@@ -396,11 +413,12 @@ function message(api, event) {
 	};
 }
 
+// 🎀 Marina's Random String Generator
 function randomString(max, onlyOnce = false, possible) {
 	if (!max || isNaN(max))
 		max = 10;
 	let text = "";
-	possible = possible || "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	possible = possible || "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789🌸💫🌊🎀✨💕🌺🥰💖🌷";
 	for (let i = 0; i < max; i++) {
 		let random = Math.floor(Math.random() * possible.length);
 		if (onlyOnce) {
@@ -418,15 +436,15 @@ function randomNumber(min, max) {
 		min = 0;
 	}
 	if (min == null || min == undefined || isNaN(min))
-		throw new Error('The first argument (min) must be a number');
+		throw new Error('🌸 The first argument (min) must be a number');
 	if (max == null || max == undefined || isNaN(max))
-		throw new Error('The second argument (max) must be a number');
+		throw new Error('🌸 The second argument (max) must be a number');
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function removeHomeDir(fullPath) {
 	if (!fullPath || typeof fullPath !== "string")
-		throw new Error('The first argument (fullPath) must be a string');
+		throw new Error('🌸 The first argument (fullPath) must be a string');
 	while (fullPath.includes(process.cwd()))
 		fullPath = fullPath.replace(process.cwd(), "");
 	return fullPath;
@@ -440,6 +458,7 @@ function splitPage(arr, limit) {
 	};
 }
 
+// 🌊 Marina's Translation API
 async function translateAPI(text, lang) {
 	try {
 		const res = await axios.get(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${lang}&dt=t&q=${encodeURIComponent(text)}`);
@@ -450,11 +469,12 @@ async function translateAPI(text, lang) {
 	}
 }
 
+// ✨ Marina's File Download Function
 async function downloadFile(url = "", path = "") {
 	if (!url || typeof url !== "string")
-		throw new Error(`The first argument (url) must be a string`);
+		throw new Error(`🌸 The first argument (url) must be a string`);
 	if (!path || typeof path !== "string")
-		throw new Error(`The second argument (path) must be a string`);
+		throw new Error(`🌸 The second argument (path) must be a string`);
 	let getFile;
 	try {
 		getFile = await axios.get(url, {
@@ -468,6 +488,7 @@ async function downloadFile(url = "", path = "") {
 	return path;
 }
 
+// 💕 Marina's UID Finder
 async function findUid(link) {
 	try {
 		const response = await axios.post(
@@ -484,23 +505,23 @@ async function findUid(link) {
 			}
 		);
 		const id = response.data;
-		// try another method if this one fails
 		if (isNaN(id)) {
 			const html = await axios.get(link);
 			const $ = cheerio.load(html.data);
 			const el = $('meta[property="al:android:url"]').attr('content');
 			if (!el) {
-				throw new Error('UID not found');
+				throw new Error('🌸 UID not found');
 			}
 			const number = el.split('/').pop();
 			return number;
 		}
 		return id;
 	} catch (error) {
-		throw new Error('An unexpected error occurred. Please try again.');
+		throw new Error('🌸 An unexpected error occurred. Please try again.');
 	}
 }
 
+// 🌸 Marina's Stream Functions
 async function getStreamsFromAttachment(attachments) {
 	const streams = [];
 	for (const attachment of attachments) {
@@ -531,7 +552,7 @@ async function getStreamFromURL(url = "", pathName = "", options = {}) {
 	}
 	try {
 		if (!url || typeof url !== "string")
-			throw new Error(`The first argument (url) must be a string`);
+			throw new Error(`🌸 The first argument (url) must be a string`);
 		const response = await axios({
 			url,
 			method: "GET",
@@ -548,13 +569,14 @@ async function getStreamFromURL(url = "", pathName = "", options = {}) {
 	}
 }
 
+// 🎀 Marina's Translation Function
 async function translate(text, lang) {
 	if (typeof text !== "string")
-		throw new Error(`The first argument (text) must be a string`);
+		throw new Error(`🌸 The first argument (text) must be a string`);
 	if (!lang)
 		lang = 'en';
 	if (typeof lang !== "string")
-		throw new Error(`The second argument (lang) must be a string`);
+		throw new Error(`🌸 The second argument (lang) must be a string`);
 	const wordTranslate = [''];
 	const wordNoTranslate = [''];
 	const wordTransAfter = [];
@@ -567,7 +589,7 @@ async function translate(text, lang) {
 
 	for (let i = 0; i < text.length; i++) {
 		const char = text[i];
-		if (word.indexOf(char) !== -1) { // is word
+		if (word.indexOf(char) !== -1) {
 			const lengWordNoTranslate = wordNoTranslate.length - 1;
 			if (wordNoTranslate[lengWordNoTranslate] && wordNoTranslate[lengWordNoTranslate].includes('{') && !wordNoTranslate[lengWordNoTranslate].includes('}')) {
 				wordNoTranslate[lengWordNoTranslate] += char;
@@ -582,7 +604,7 @@ async function translate(text, lang) {
 				lastPosition = 'wordTranslate';
 			}
 		}
-		else { // is no word
+		else {
 			const lengWordNoTranslate = wordNoTranslate.length - 1;
 			const twoWordLast = wordNoTranslate[lengWordNoTranslate]?.slice(-2) || '';
 			if (lastPosition == 'wordNoTranslate') {
@@ -632,6 +654,7 @@ async function translate(text, lang) {
 	return output;
 }
 
+// 💫 Marina's URL Shortener
 async function shortenURL(url) {
 	try {
 		const result = await axios.get(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(url)}`);
@@ -648,18 +671,19 @@ async function shortenURL(url) {
 	}
 }
 
-async function uploadImgbb(file /* stream or image url */) {
+// 🌺 Marina's Image Upload Function
+async function uploadImgbb(file) {
 	let type = "file";
 	try {
 		if (!file)
-			throw new Error('The first argument (file) must be a stream or a image url');
+			throw new Error('🌸 The first argument (file) must be a stream or a image url');
 		if (regCheckURL.test(file) == true)
 			type = "url";
 		if (
 			(type != "url" && (!(typeof file._read === 'function' && typeof file._readableState === 'object')))
 			|| (type == "url" && !regCheckURL.test(file))
 		)
-			throw new Error('The first argument (file) must be a stream or an image URL');
+			throw new Error('🌸 The first argument (file) must be a stream or an image URL');
 
 		const res_ = await axios({
 			method: 'GET',
@@ -685,82 +709,13 @@ async function uploadImgbb(file /* stream or image url */) {
 		});
 
 		return res.data;
-		// {
-		// 	"status_code": 200,
-		// 	"success": {
-		// 		"message": "image uploaded",
-		// 		"code": 200
-		// 	},
-		// 	"image": {
-		// 		"name": "Banner-Project-Goat-Bot",
-		// 		"extension": "png",
-		// 		"width": 2560,
-		// 		"height": 1440,
-		// 		"size": 194460,
-		// 		"time": 1688352855,
-		// 		"expiration": 0,
-		// 		"likes": 0,
-		// 		"description": null,
-		// 		"original_filename": "Banner Project Goat Bot.png",
-		// 		"is_animated": 0,
-		// 		"is_360": 0,
-		// 		"nsfw": 0,
-		// 		"id_encoded": "D1yzzdr",
-		// 		"size_formatted": "194.5 KB",
-		// 		"filename": "Banner-Project-Goat-Bot.png",
-		// 		"url": "https://i.ibb.co/wdXBBtc/Banner-Project-Goat-Bot.png",  // => this is url image
-		// 		"url_viewer": "https://ibb.co/D1yzzdr",
-		// 		"url_viewer_preview": "https://ibb.co/D1yzzdr",
-		// 		"url_viewer_thumb": "https://ibb.co/D1yzzdr",
-		// 		"image": {
-		// 			"filename": "Banner-Project-Goat-Bot.png",
-		// 			"name": "Banner-Project-Goat-Bot",
-		// 			"mime": "image/png",
-		// 			"extension": "png",
-		// 			"url": "https://i.ibb.co/wdXBBtc/Banner-Project-Goat-Bot.png",
-		// 			"size": 194460
-		// 		},
-		// 		"thumb": {
-		// 			"filename": "Banner-Project-Goat-Bot.png",
-		// 			"name": "Banner-Project-Goat-Bot",
-		// 			"mime": "image/png",
-		// 			"extension": "png",
-		// 			"url": "https://i.ibb.co/D1yzzdr/Banner-Project-Goat-Bot.png"
-		// 		},
-		// 		"medium": {
-		// 			"filename": "Banner-Project-Goat-Bot.png",
-		// 			"name": "Banner-Project-Goat-Bot",
-		// 			"mime": "image/png",
-		// 			"extension": "png",
-		// 			"url": "https://i.ibb.co/tHtQQRL/Banner-Project-Goat-Bot.png"
-		// 		},
-		// 		"display_url": "https://i.ibb.co/tHtQQRL/Banner-Project-Goat-Bot.png",
-		// 		"display_width": 2560,
-		// 		"display_height": 1440,
-		// 		"delete_url": "https://ibb.co/D1yzzdr/<TOKEN>",
-		// 		"views_label": "lượt xem",
-		// 		"likes_label": "thích",
-		// 		"how_long_ago": "mới đây",
-		// 		"date_fixed_peer": "2023-07-03 02:54:15",
-		// 		"title": "Banner-Project-Goat-Bot",
-		// 		"title_truncated": "Banner-Project-Goat-Bot",
-		// 		"title_truncated_html": "Banner-Project-Goat-Bot",
-		// 		"is_use_loader": false
-		// 	},
-		// 	"request": {
-		// 		"type": "file",
-		// 		"action": "upload",
-		// 		"timestamp": "1688352853967",
-		// 		"auth_token": "a2606b39536a05a81bef15558bb0d61f7253dccb"
-		// 	},
-		// 	"status_txt": "OK"
-		// }
 	}
 	catch (err) {
 		throw new CustomError(err.response ? err.response.data : err);
 	}
 }
 
+// ✨ Marina's Zippyshare Upload
 async function uploadZippyshare(stream) {
 	const res = await axios({
 		method: 'POST',
@@ -790,6 +745,7 @@ async function uploadZippyshare(stream) {
 	return res.data;
 }
 
+// 🎀 Marina's Google Drive Functions
 const drive = {
 	default: driveApi,
 	parentID: "",
@@ -821,7 +777,7 @@ const drive = {
 
 	async deleteFile(id) {
 		if (!id || typeof id !== "string")
-			throw new Error('The first argument (id) must be a string');
+			throw new Error('🌸 The first argument (id) must be a string');
 		try {
 			await driveApi.files.delete({
 				fileId: id
@@ -835,17 +791,17 @@ const drive = {
 
 	getUrlDownload(id = "") {
 		if (!id || typeof id !== "string")
-			throw new Error('The first argument (id) must be a string');
+			throw new Error('🌸 The first argument (id) must be a string');
 		return `https://docs.google.com/uc?id=${id}&export=download&confirm=t${googleApiKey ? `&key=${googleApiKey}` : ''}`;
 	},
 
 	async getFile(id, responseType) {
 		if (!id || typeof id !== "string")
-			throw new Error('The first argument (id) must be a string');
+			throw new Error('🌸 The first argument (id) must be a string');
 		if (!responseType)
 			responseType = "arraybuffer";
 		if (typeof responseType !== "string")
-			throw new Error('The second argument (responseType) must be a string');
+			throw new Error('🌸 The second argument (responseType) must be a string');
 
 		const response = await driveApi.files.get({
 			fileId: id,
@@ -868,7 +824,7 @@ const drive = {
 
 	async getFileName(id) {
 		if (!id || typeof id !== "string")
-			throw new Error('The first argument (id) must be a string');
+			throw new Error('🌸 The first argument (id) must be a string');
 		const { fileNames: tempFileNames } = global.temp.filesOfGoogleDrive;
 		if (tempFileNames[id])
 			return tempFileNames[id];
@@ -887,7 +843,7 @@ const drive = {
 
 	async makePublic(id) {
 		if (!id || typeof id !== "string")
-			throw new Error('The first argument (id) must be a string');
+			throw new Error('🌸 The first argument (id) must be a string');
 		try {
 			await driveApi.permissions.create({
 				fileId: id,
@@ -907,7 +863,7 @@ const drive = {
 
 	async checkAndCreateParentFolder(folderName) {
 		if (!folderName || typeof folderName !== "string")
-			throw new Error('The first argument (folderName) must be a string');
+			throw new Error('🌸 The first argument (folderName) must be a string');
 		let parentID;
 		const { data: findParentFolder } = await driveApi.files.list({
 			q: `name="${folderName}" and mimeType="application/vnd.google-apps.folder" and trashed=false`,
@@ -946,6 +902,7 @@ const drive = {
 	}
 };
 
+// 🌸 Marina's GoatBot API Class
 class GoatBotApis {
 	constructor(apiKey) {
 		this.apiKey = apiKey;
@@ -957,7 +914,6 @@ class GoatBotApis {
 			}
 		});
 
-		// modify axios response
 		this.api.interceptors.response.use((response) => {
 			return {
 				status: response.status,
@@ -971,11 +927,9 @@ class GoatBotApis {
 			};
 		});
 
-		// modify axios response error
 		this.api.interceptors.response.use(undefined, async (error) => {
 			let responseDataError;
 			const promise = () => new Promise((resolveFunc) => {
-				// decode all response data to utf8 (string) if responseType is 
 				if (error.response.config.responseType === "arraybuffer") {
 					responseDataError = Buffer.from(error.response.data, "binary").toString("utf8");
 					resolveFunc();
@@ -1028,6 +982,7 @@ class GoatBotApis {
 	}
 }
 
+// 💫 Marina's Utils Object
 const utils = {
 	CustomError,
 	TaskQueue,
