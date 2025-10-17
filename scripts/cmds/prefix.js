@@ -37,13 +37,34 @@ module.exports = {
 		}
 	},
 
-	onStart: async function ({ message, role, args, commandName, event, threadsData, getLang }) {
-		if (!args[0])
-			return message.SyntaxError();
+	onStart: async function ({ message, role, args, commandName, event, threadsData, getLang, usersData, api }) {
+		// Your fixed profile picture URL
+		const marinaProfilePic = "https://graph.facebook.com/61577638905771/picture?width=720&height=720&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662";
+		
+		if (!args[0]) {
+			// When just "prefix" is typed, send info with Marina's profile picture
+			try {
+				return message.reply({
+					body: getLang("myPrefix", global.GoatBot.config.prefix, utils.getPrefix(event.threadID)),
+					attachment: await global.utils.getStreamFromURL(marinaProfilePic)
+				});
+			} catch (error) {
+				// If profile pic fails, send without attachment
+				return message.reply(getLang("myPrefix", global.GoatBot.config.prefix, utils.getPrefix(event.threadID)));
+			}
+		}
 
 		if (args[0] == 'reset') {
 			await threadsData.set(event.threadID, null, "data.prefix");
-			return message.reply(getLang("reset", global.GoatBot.config.prefix));
+			
+			try {
+				return message.reply({
+					body: getLang("reset", global.GoatBot.config.prefix),
+					attachment: await global.utils.getStreamFromURL(marinaProfilePic)
+				});
+			} catch (error) {
+				return message.reply(getLang("reset", global.GoatBot.config.prefix));
+			}
 		}
 
 		const newPrefix = args[0];
@@ -63,34 +84,75 @@ module.exports = {
 			formSet.setGlobal = false;
 		}
 
-		return message.reply(
-			formSet.setGlobal ? getLang("confirmGlobal") : getLang("confirmThisThread"), 
-			(err, info) => {
+		try {
+			return message.reply({
+				body: formSet.setGlobal ? getLang("confirmGlobal") : getLang("confirmThisThread"),
+				attachment: await global.utils.getStreamFromURL(marinaProfilePic)
+			}, (err, info) => {
 				formSet.messageID = info.messageID;
 				global.GoatBot.onReaction.set(info.messageID, formSet);
-			}
-		);
+			});
+		} catch (error) {
+			return message.reply(
+				formSet.setGlobal ? getLang("confirmGlobal") : getLang("confirmThisThread"), 
+				(err, info) => {
+					formSet.messageID = info.messageID;
+					global.GoatBot.onReaction.set(info.messageID, formSet);
+				}
+			);
+		}
 	},
 
-	onReaction: async function ({ message, threadsData, event, Reaction, getLang }) {
+	onReaction: async function ({ message, threadsData, event, Reaction, getLang, usersData, api }) {
 		const { author, newPrefix, setGlobal } = Reaction;
 		if (event.userID !== author)
 			return;
 		
-		if (setGlobal) {
-			global.GoatBot.config.prefix = newPrefix;
-			fs.writeFileSync(global.client.dirConfig, JSON.stringify(global.GoatBot.config, null, 2));
-			return message.reply(getLang("successGlobal", newPrefix));
-		}
-		else {
-			await threadsData.set(event.threadID, newPrefix, "data.prefix");
-			return message.reply(getLang("successThisThread", newPrefix));
+		// Your fixed profile picture URL
+		const marinaProfilePic = "https://graph.facebook.com/61577638905771/picture?width=720&height=720&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662";
+		
+		try {
+			if (setGlobal) {
+				global.GoatBot.config.prefix = newPrefix;
+				fs.writeFileSync(global.client.dirConfig, JSON.stringify(global.GoatBot.config, null, 2));
+				return message.reply({
+					body: getLang("successGlobal", newPrefix),
+					attachment: await global.utils.getStreamFromURL(marinaProfilePic)
+				});
+			}
+			else {
+				await threadsData.set(event.threadID, newPrefix, "data.prefix");
+				return message.reply({
+					body: getLang("successThisThread", newPrefix),
+					attachment: await global.utils.getStreamFromURL(marinaProfilePic)
+				});
+			}
+		} catch (error) {
+			if (setGlobal) {
+				global.GoatBot.config.prefix = newPrefix;
+				fs.writeFileSync(global.client.dirConfig, JSON.stringify(global.GoatBot.config, null, 2));
+				return message.reply(getLang("successGlobal", newPrefix));
+			}
+			else {
+				await threadsData.set(event.threadID, newPrefix, "data.prefix");
+				return message.reply(getLang("successThisThread", newPrefix));
+			}
 		}
 	},
 
-	onChat: async function ({ event, message, getLang }) {
+	onChat: async function ({ event, message, getLang, usersData, api }) {
 		if (event.body && event.body.toLowerCase() === "prefix") {
-			return message.reply(getLang("myPrefix", global.GoatBot.config.prefix, utils.getPrefix(event.threadID)));
+			// Your fixed profile picture URL
+			const marinaProfilePic = "https://graph.facebook.com/61577638905771/picture?width=720&height=720&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662";
+			
+			try {
+				return message.reply({
+					body: getLang("myPrefix", global.GoatBot.config.prefix, utils.getPrefix(event.threadID)),
+					attachment: await global.utils.getStreamFromURL(marinaProfilePic)
+				});
+			} catch (error) {
+				return message.reply(getLang("myPrefix", global.GoatBot.config.prefix, utils.getPrefix(event.threadID)));
+			}
 		}
 	}
 };
