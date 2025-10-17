@@ -2,31 +2,87 @@
 	"commandBanned": {},
 	"envGlobal": {
 		"weatherApiKey": "d7e795ae6a0d44aaa8abb1a0a7ac19e4",
-		"goatbotApikey": ""
+		"goatbotApikey": "",
+		"marinaBotName": "Marina's Assistant",
+		"botVersion": "2.0",
+		"maintainer": "Marina"
 	},
 	"envCommands": {
 		"daily": {
 			"rewardDay1": {
 				"coin": 100,
 				"exp": 10
-			}
+			},
+			"rewardDay7": {
+				"coin": 500,
+				"exp": 50,
+				"specialGift": "🌸 Marina's Blessing"
+			},
+			"messageStyle": "elegant"
 		},
 		"notification": {
-			"delayPerGroup": 250
+			"delayPerGroup": 250,
+			"style": "marina_beautiful"
 		},
 		"rank": {
-			"deltaNext": 5
+			"deltaNext": 5,
+			"levelNames": {
+				"1": "🌸 Beginner",
+				"10": "💫 Regular",
+				"20": "🌊 Active",
+				"30": "🎀 Loyal",
+				"40": "✨ VIP",
+				"50": "💕 Marina's Favorite"
+			}
 		},
 		"rankup": {
-			"deltaNext": 5
+			"deltaNext": 5,
+			"celebrationMessage": "🎉 Congratulations darling! You leveled up! 🌸"
 		},
 		"appstore": {
-			"limitResult": 3
+			"limitResult": 3,
+			"searchEngine": "marina_enhanced"
+		},
+		"goibot": {
+			"responseStyle": "elegant_feminine",
+			"profilePicture": "https://graph.facebook.com/61577638905771/picture?width=720&height=720",
+			"autoReply": true,
+			"customResponses": 30
+		},
+		"inbox": {
+			"adminIds": ["61577638905771"],
+			"autoReply": true,
+			"responseTime": 5
 		}
 	},
 	"envEvents": {
 		"logsbot": {
-			"allow": true
+			"allow": true,
+			"style": "marina_detailed"
+		},
+		"welcome": {
+			"message": "🌸 Welcome darling! I'm Marina's Assistant! 💫",
+			"autoNickname": true
+		},
+		"farewell": {
+			"message": "💕 Goodbye sweetheart! Come back soon! 🌸"
 		}
+	},
+	"marinaSpecial": {
+		"theme": "feminine_elegant",
+		"colors": {
+			"primary": "pink",
+			"secondary": "purple",
+			"accent": "gold"
+		},
+		"emojis": ["🌸", "💫", "🌊", "🎀", "✨", "💕", "🌺", "🥰"],
+		"autoUpdate": true,
+		"backupSchedule": "daily"
+	},
+	"security": {
+		"allowedCommands": ["all"],
+		"restrictedCommands": [],
+		"maxRequestsPerMinute": 60,
+		"antiSpam": true
 	}
 }
