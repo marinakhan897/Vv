@@ -1,6 +1,9 @@
 {
+	// 🌸 Marina's Beautiful Editor Settings
 	"editor.formatOnSave": false,
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	
+	// 💫 Marina's Prettier Configuration
 	"prettier.singleQuote": true,
 	"prettier.trailingComma": "es5",
 	"prettier.printWidth": 100,
@@ -9,6 +12,8 @@
 	"prettier.arrowParens": "avoid",
 	"prettier.semi": true,
 	"prettier.endOfLine": "lf",
+	
+	// 🌊 Marina's JavaScript Formatting Rules
 	"javascript.format.insertSpaceAfterKeywordsInControlFlowStatements": true,
 	"javascript.format.wrapLogicalExpressions": true,
 	"javascript.format.breakBeforeBinaryOperators": true,
@@ -18,6 +23,8 @@
 	"javascript.format.wrapFunctionParameters": true,
 	"javascript.format.sortImports": true,
 	"javascript.format.placeCursorAfterClosingCurlyBrace": true,
+	
+	// 🎀 Marina's Space Formatting Rules
 	"javascript.format.insertSpaceBeforeFunctionKeyword": true,
 	"javascript.format.insertSpaceBetweenFunctionKeywordAndParenthesis": true,
 	"javascript.format.insertSpaceAfterFunctionName": true,
@@ -26,25 +33,45 @@
 	"javascript.format.insertSpaceBeforeColon": true,
 	"javascript.format.insertSpaceAfterColon": true,
 	"javascript.format.insertSpaceAroundOperators": true,
+	
+	// ✨ Marina's Comment Formatting
 	"javascript.format.insertSpaceBeforeBlockComments": true,
 	"javascript.format.insertSpaceAfterBlockComments": true,
 	"javascript.format.insertSpaceBeforeLineComments": true,
 	"javascript.format.insertSpaceAfterLineComments": true,
+	
+	// 💕 Marina's Control Flow Formatting
 	"javascript.format.insertSpaceBeforeKeywordsInControlFlowStatements": true,
 	"javascript.format.insertSpaceAfterKeywordsInControlFlowStatements": true,
-	"javascript.format.insertSpaceBeforeFunctionKeyword": true,
-	"javascript.format.insertSpaceBetweenFunctionKeywordAndParenthesis": true,
-	"javascript.format.insertSpaceAfterFunctionName": true,
-	"javascript.format.insertSpaceAfterComma": true,
-	"javascript.format.insertSpaceAfterSemicolon": true,
-	"javascript.format.insertSpaceBeforeColon": true,
-	"javascript.format.insertSpaceAfterColon": true,
-	"javascript.format.insertSpaceAroundOperators": true,
-	"javascript.format.insertSpaceBeforeBlockComments": true,
-	"javascript.format.insertSpaceAfterBlockComments": true,
-	"javascript.format.insertSpaceBeforeLineComments": true,
-	"javascript.format.insertSpaceAfterLineComments": true,
+	
+	// 🌺 Marina's Language Specific Settings
 	"[javascript]": {
-		"editor.defaultFormatter": "vscode.typescript-language-features"
+		"editor.defaultFormatter": "vscode.typescript-language-features",
+		"editor.fontSize": 14,
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true,
+		"editor.wordWrap": "on"
 	},
+	
+	"[json]": {
+		"editor.defaultFormatter": "vscode.json-language-features",
+		"editor.tabSize": 2
+	},
+	
+	// 🥰 Marina's Theme & Appearance
+	"workbench.colorTheme": "Default Dark+",
+	"workbench.iconTheme": "vs-seti",
+	"editor.fontFamily": "'Cascadia Code', 'Fira Code', Consolas, monospace",
+	"editor.fontLigatures": true,
+	"editor.lineHeight": 1.5,
+	
+	// 🌷 Marina's Bot Development Extensions
+	"extensions.autoUpdate": true,
+	"files.autoSave": "afterDelay",
+	"files.autoSaveDelay": 1000,
+	
+	// 💖 Marina's Special Settings
+	"marina.bot.development": true,
+	"marina.bot.version": "2.0",
+	"marina.bot.author": "Marina"
 }
