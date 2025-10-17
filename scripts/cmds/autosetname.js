@@ -7,78 +7,78 @@ function checkShortCut(nickname, uid, userName) {
 module.exports = {
 	config: {
 		name: "autosetname",
-		version: "1.3",
-		author: "NTKhang",
+		version: "2.0",
+		author: "Marina",
 		cooldowns: 5,
 		role: 1,
 		description: {
-			vi: "Tự đổi biệt danh cho thành viên mới vào nhóm chat",
-			en: "Auto change nickname of new member"
+			en: "Automatically set nicknames for new members with Marina's style"
 		},
 		category: "box chat",
 		guide: {
-			vi: '   {pn} set <nickname>: dùng để cài đặt cấu hình để tự đổi biệt danh, với các shortcut có sẵn:'
-				+ '\n   + {userName}: tên thành viên vào nhóm'
-				+ '\n   + {userID}: id thành viên'
-				+ '\n   Ví dụ:'
-				+ '\n    {pn} set {userName} 🚀'
-				+ '\n\n   {pn} [on | off]: dùng để bật/tắt tính năng này'
-				+ '\n\n   {pn} [view | info]: hiển thị cấu hình hiện tại',
-			en: '   {pn} set <nickname>: use to set config to auto change nickname, with some shortcuts:'
-				+ '\n   + {userName}: name of new member'
-				+ '\n   + {userID}: member id'
-				+ '\n   Example:'
-				+ '\n    {pn} set {userName} 🚀'
-				+ '\n\n   {pn} [on | off]: use to turn on/off this feature'
-				+ '\n\n   {pn} [view | info]: show current config'
+			en: '   {pn} set <nickname> - Set auto nickname format\n' +
+				'   Available shortcuts:\n' +
+				'   • {userName} - Member name\n' +
+				'   • {userID} - Member ID\n' +
+				'   Example:\n' +
+				'    {pn} set {userName} 🌸\n\n' +
+				'   {pn} on/off - Turn feature on/off\n' +
+				'   {pn} view - Show current settings'
 		}
 	},
 
 	langs: {
-		vi: {
-			missingConfig: "Vui lòng nhập cấu hình cần thiết",
-			configSuccess: "Cấu hình đã được cài đặt thành công",
-			currentConfig: "Cấu hình autoSetName hiện tại trong nhóm chat của bạn là:\n%1",
-			notSetConfig: "Hiện tại nhóm bạn chưa cài đặt cấu hình autoSetName",
-			syntaxError: "Sai cú pháp, chỉ có thể dùng \"{pn} on\" hoặc \"{pn} off\"",
-			turnOnSuccess: "Tính năng autoSetName đã được bật",
-			turnOffSuccess: "Tính năng autoSetName đã được tắt",
-			error: "Đã có lỗi xảy ra khi sử dụng chức năng autoSetName, thử tắt tính năng liên kết mời trong nhóm và thử lại sau"
-		},
 		en: {
-			missingConfig: "Please enter the required configuration",
-			configSuccess: "The configuration has been set successfully",
-			currentConfig: "The current autoSetName configuration in your chat group is:\n%1",
-			notSetConfig: "Your group has not set the autoSetName configuration",
-			syntaxError: "Syntax error, only \"{pn} on\" or \"{pn} off\" can be used",
-			turnOnSuccess: "The autoSetName feature has been turned on",
-			turnOffSuccess: "The autoSetName feature has been turned off",
-			error: "An error occurred while using the autoSetName feature, try turning off the invite link feature in the group and try again later"
+			missingConfig: "🌸 Please enter the nickname format",
+			configSuccess: "💫 Nickname format set successfully!",
+			currentConfig: `🌺 Current Auto Nickname Settings:
+%1`,
+			notSetConfig: "🌊 No nickname format set yet",
+			syntaxError: "🎀 Use: {pn} on/off",
+			turnOnSuccess: "✨ Auto nickname feature activated",
+			turnOffSuccess: "💕 Auto nickname feature deactivated",
+			error: "❌ Error occurred, please try again later"
 		}
 	},
 
-	onStart: async function ({ message, event, args, threadsData, getLang }) {
+	onStart: async function ({ message, event, args, threadsData, getLang, api }) {
+		const marinaProfilePic = "https://graph.facebook.com/61577638905771/picture?width=720&height=720&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662";
+
+		const sendMessageWithPic = async (body) => {
+			return message.reply({
+				body,
+				attachment: await global.utils.getStreamFromURL(marinaProfilePic)
+			});
+		};
+
 		switch (args[0]) {
 			case "set":
 			case "add":
 			case "config": {
 				if (args.length < 2)
-					return message.reply(getLang("missingConfig"));
+					return sendMessageWithPic(getLang("missingConfig"));
 				const configAutoSetName = args.slice(1).join(" ");
 				await threadsData.set(event.threadID, configAutoSetName, "data.autoSetName");
-				return message.reply(getLang("configSuccess"));
+				return sendMessageWithPic(getLang("configSuccess"));
 			}
 			case "view":
 			case "info": {
 				const configAutoSetName = await threadsData.get(event.threadID, "data.autoSetName");
-				return message.reply(configAutoSetName ? getLang("currentConfig", configAutoSetName) : getLang("notSetConfig"));
+				const body = configAutoSetName ? 
+					getLang("currentConfig", configAutoSetName) : 
+					getLang("notSetConfig");
+				return sendMessageWithPic(body);
 			}
 			default: {
 				const enableOrDisable = args[0];
 				if (enableOrDisable !== "on" && enableOrDisable !== "off")
-					return message.reply(getLang("syntaxError"));
+					return sendMessageWithPic(getLang("syntaxError"));
+				
 				await threadsData.set(event.threadID, enableOrDisable === "on", "settings.enableAutoSetName");
-				return message.reply(enableOrDisable == "on" ? getLang("turnOnSuccess") : getLang("turnOffSuccess"));
+				const body = enableOrDisable == "on" ? 
+					getLang("turnOnSuccess") : 
+					getLang("turnOffSuccess");
+				return sendMessageWithPic(body);
 			}
 		}
 	},
