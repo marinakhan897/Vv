@@ -1,4 +1,14 @@
-node_modules
+# 🌸 Marina's Bot Git Ignore Rules
+# 💫 Elegant file exclusion for clean repositories
+
+# 🚫 Node.js Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# 🌊 Development & Build Files
 fb-chat-api.dev
 obfcode.js
 minify.js
@@ -6,18 +16,57 @@ backupOrigin.js
 createVersion.js
 createVersionAndCommit.js
 checkOriginCodeChanged.js
+
+# 📦 Archive Files
 *.zip
-*.dev.*
 *.rar
+*.tar
+*.gz
+*.7z
+
+# 🔧 Test Files
 *test.*
 *.test.*
 test.js
+__tests__/
+coverage/
+.nyc_output/
 
+# 🎀 Temporary Files
+*.tmp
+*.temp
+*.log
+*.pid
+*.seed
+*.pid.lock
+
+# 💫 Environment Files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 🌺 IDE & Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# 🗄️ Database Files
 database/data/*
 !database/data/.gitkeep
+*.db
+*.sqlite
+*.sqlite3
 
+# 📝 Script Assets & Temporary Files
 scripts/cmds/tmp/*
 !scripts/cmds/tmp/.gitkeep
+
 scripts/cmds/assets/guide
 !scripts/cmds/assets/guide/.gitkeep
 
@@ -25,3 +74,95 @@ scripts/events/tmp/*
 scripts/events/data/leaveAttachment
 scripts/events/data/welcomeAttachment
 !scripts/events/tmp/.gitkeep
+
+# 🌸 Marina's Bot Specific
+config.json
+appstate.json
+fbstate.json
+fca-state.json
+credentials.json
+
+# 💫 Log Files
+logs/
+*.log
+logfile*
+
+# 🎀 Backup Files
+backup/
+*.bak
+*.backup
+
+# 🔧 Cache Directories
+.cache/
+.tmp/
+temp/
+
+# 🌊 Uploaded Files
+uploads/
+downloads/
+temp_uploads/
+
+# 💕 Session Files
+session-*
+*.session
+*.session.json
+
+# ✨ Package Manager Files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# 🎯 Build Output
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# 🌺 Operating System Files
+.DS_Store
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# 💫 Documentation
+*.doc
+*.docx
+*.pdf
+*.ppt
+*.pptx
+
+# 🖼️ Media Files (if any)
+*.mp4
+*.mp3
+*.avi
+*.mov
+*.jpg
+*.jpeg
+*.png
+*.gif
+
+# 🔒 Security Sensitive
+*.key
+*.pem
+*.crt
+*.cert
+*.priv
+
+# 🌸 Custom Marina Files
+marina-backup-*
+marina-temp-*
+marina-log-*
+
+# 💫 Git Files
+.git/
+*.orig
+
+# 🎀 Performance Files
+*.pid
+*.cpuprofile
+*.heapsnapshot
+
+# 🌊 Debug Files
+debug/
+*.debug
+*.node
