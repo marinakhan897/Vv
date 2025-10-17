@@ -1,42 +1,59 @@
-
+// 🌸 Marina's Beautiful Code Highlighter
+// 💫 Elegant syntax highlighting with Marina's colors
 
 const styles = {
-	cdata: "color:#8292a2",
-	comment: "color:#8292a2",
-	doctype: "color:#8292a2",
-	prolog: "color:#8292a2",
-	punctuation: "color:#f8f8f2",
+	// 🌊 Marina's Color Palette
+	cdata: "color:#ff69b4",        // Pink
+	comment: "color:#9370db",      // Purple
+	doctype: "color:#ff69b4",      // Pink
+	prolog: "color:#ff69b4",       // Pink
+	punctuation: "color:#ffb6c1",  // Light Pink
 	namespace: "opacity:.7",
-	constant: "color:#f92672",
-	deleted: "color:#f92672",
-	property: "color:#f92672",
-	symbol: "color:#f92672",
-	tag: "color:#f92672",
-	boolean: "color:#ae81ff",
-	number: "color:#ae81ff",
-	'attr-name': "color:#a6e22e",
-	builtin: "color:#a6e22e",
-	char: "color:#a6e22e",
-	inserted: "color:#a6e22e",
-	selector: "color:#a6e22e",
-	string: "color:#a6e22e",
-	'language-css .token.string': "color:#f8f8f2",
-	'.style .token.string': "color:#f8f8f2",
-	entity: "color:#f8f8f2; cursor:help",
-	operator: "color:#f8f8f2",
-	url: "color:#f8f8f2",
-	variable: "color:#f8f8f2",
-	atrule: "color:#e6db74",
-	'attr-value': "color:#e6db74",
-	'class-name': "color:#e6db74",
-	'function': "color:#e6db74",
-	keyword: 'color:#66d9ef',
-	regex: "color:#fd971f",
-	important: "color:#fd971f; font-weight:bold",
+	
+	// 🌺 Keywords and Constants
+	constant: "color:#ff1493",     // Deep Pink
+	deleted: "color:#ff1493",      // Deep Pink
+	property: "color:#ff1493",     // Deep Pink
+	symbol: "color:#ff1493",       // Deep Pink
+	tag: "color:#ff1493",          // Deep Pink
+	
+	// 💫 Numbers and Booleans
+	boolean: "color:#ba55d3",      // Medium Orchid
+	number: "color:#ba55d3",       // Medium Orchid
+	
+	// 🎀 Strings and Attributes
+	'attr-name': "color:#32cd32",  // Lime Green
+	builtin: "color:#32cd32",      // Lime Green
+	char: "color:#32cd32",         // Lime Green
+	inserted: "color:#32cd32",     // Lime Green
+	selector: "color:#32cd32",     // Lime Green
+	string: "color:#87ceeb",       // Sky Blue
+	
+	// ✨ Special Elements
+	'language-css .token.string': "color:#ffb6c1",
+	'.style .token.string': "color:#ffb6c1",
+	entity: "color:#ffb6c1; cursor:help",
+	operator: "color:#ffb6c1",     // Light Pink
+	url: "color:#ffb6c1",          // Light Pink
+	variable: "color:#ffb6c1",     // Light Pink
+	
+	// 🌸 Functions and Classes
+	atrule: "color:#ffd700",       // Gold
+	'attr-value': "color:#ffd700", // Gold
+	'class-name': "color:#ffd700", // Gold
+	'function': "color:#00ced1",   // Dark Turquoise
+	
+	// 💕 Keywords and Regex
+	keyword: "color:#00bfff",      // Deep Sky Blue
+	regex: "color:#ffa500",        // Orange
+	important: "color:#ff4500; font-weight:bold", // Orange Red
+	
+	// 🎀 Text Styles
 	bold: "font-weight:bold",
 	italic: "font-style:italic"
 };
 
+// 🌊 Marina's LinkedList Implementation
 function LinkedList() {
 	/** @type {LinkedListNode<T>} */
 	const head = { value: null, prev: null, next: null };
@@ -51,15 +68,13 @@ function LinkedList() {
 	this.length = 0;
 }
 
+// 💫 Marina's Utility Functions
 function addAfter(list, node, value) {
-	// assumes that node != list.tail && values.length >= 0
 	const next = node.next;
-
 	const newNode = { value: value, prev: node, next: next };
 	node.next = newNode;
 	next.prev = newNode;
 	list.length++;
-
 	return newNode;
 }
 
@@ -67,7 +82,6 @@ function matchPattern(pattern, pos, text, lookbehind) {
 	pattern.lastIndex = pos;
 	const match = pattern.exec(text);
 	if (match && lookbehind && match[1]) {
-		// change the match to remove the text matched by the Prism lookbehind group
 		const lookbehindLength = match[1].length;
 		match.index += lookbehindLength;
 		match[0] = match[0].slice(lookbehindLength);
@@ -95,6 +109,7 @@ function toArray(list) {
 	return array;
 }
 
+// 🌸 Marina's Grammar Matching
 function matchGrammar(text, tokenList, grammar, startNode, startPos, rematch) {
 	for (const token in grammar) {
 		if (!grammar.hasOwnProperty(token) || !grammar[token]) {
@@ -116,7 +131,6 @@ function matchGrammar(text, tokenList, grammar, startNode, startPos, rematch) {
 			const alias = patternObj.alias;
 
 			if (greedy && !patternObj.pattern.global) {
-				// Without the global flag, lastIndex won't work
 				const flags = patternObj.pattern.toString().match(/[imsuy]*$/)[0];
 				patternObj.pattern = RegExp(patternObj.pattern.source, flags + 'g');
 			}
@@ -124,8 +138,7 @@ function matchGrammar(text, tokenList, grammar, startNode, startPos, rematch) {
 			/** @type {RegExp} */
 			const pattern = patternObj.pattern || patternObj;
 
-			for ( // iterate the token list and keep track of the current token/string position
-				let currentNode = startNode.next, pos = startPos;
+			for (let currentNode = startNode.next, pos = startPos;
 				currentNode !== tokenList.tail;
 				pos += currentNode.value.length, currentNode = currentNode.next
 			) {
@@ -137,7 +150,6 @@ function matchGrammar(text, tokenList, grammar, startNode, startPos, rematch) {
 				let str = currentNode.value;
 
 				if (tokenList.length > text.length) {
-					// Something went terribly wrong, ABORT, ABORT!
 					return;
 				}
 
@@ -145,7 +157,7 @@ function matchGrammar(text, tokenList, grammar, startNode, startPos, rematch) {
 					continue;
 				}
 
-				let removeCount = 1; // this is the to parameter of removeBetween
+				let removeCount = 1;
 				var match;
 
 				if (greedy) {
@@ -158,24 +170,19 @@ function matchGrammar(text, tokenList, grammar, startNode, startPos, rematch) {
 					const to = match.index + match[0].length;
 					let p = pos;
 
-					// find the node that contains the match
 					p += currentNode.value.length;
 					while (from >= p) {
 						currentNode = currentNode.next;
 						p += currentNode.value.length;
 					}
-					// adjust pos (and p)
 					p -= currentNode.value.length;
 					pos = p;
 
-					// the current node is a Token, then the match starts inside another Token, which is invalid
 					if (currentNode.value instanceof Token) {
 						continue;
 					}
 
-					// find the last node which is affected by this match
-					for (
-						let k = currentNode;
+					for (let k = currentNode;
 						k !== tokenList.tail && (p < to || typeof k.value === 'string');
 						k = k.next
 					) {
@@ -184,7 +191,6 @@ function matchGrammar(text, tokenList, grammar, startNode, startPos, rematch) {
 					}
 					removeCount--;
 
-					// replace with the new match
 					str = text.slice(pos, p);
 					match.index -= pos;
 				} else {
@@ -194,7 +200,6 @@ function matchGrammar(text, tokenList, grammar, startNode, startPos, rematch) {
 					}
 				}
 
-				// eslint-disable-next-line no-redeclare
 				var from = match.index;
 				const matchStr = match[0];
 				const before = str.slice(0, from);
@@ -222,17 +227,12 @@ function matchGrammar(text, tokenList, grammar, startNode, startPos, rematch) {
 				}
 
 				if (removeCount > 1) {
-					// at least one Token object was removed, so we have to do some rematching
-					// this can only happen if the current pattern is greedy
-
-					/** @type {RematchOptions} */
 					const nestedRematch = {
 						cause: token + ',' + j,
 						reach: reach
 					};
 					matchGrammar(text, tokenList, grammar, currentNode.prev, pos, nestedRematch);
 
-					// the reach might have been extended because of the rematching
 					if (rematch && nestedRematch.reach > rematch.reach) {
 						rematch.reach = nestedRematch.reach;
 					}
@@ -242,39 +242,13 @@ function matchGrammar(text, tokenList, grammar, startNode, startPos, rematch) {
 	}
 }
 
-
+// 🎀 Marina's Token Class
 function Token(type, content, alias, matchedStr) {
-	/**
-	 * The type of the token.
-	 *
-	 * This is usually the key of a pattern in a {@link Grammar}.
-	 *
-	 * @type {string}
-	 * @see GrammarToken
-	 * @public
-	 */
 	this.type = type;
-	/**
-	 * The strings or tokens contained by this token.
-	 *
-	 * This will be a token stream if the pattern matched also defined an `inside` grammar.
-	 *
-	 * @type {string | TokenStream}
-	 * @public
-	 */
 	this.content = content;
-	/**
-	 * The alias(es) of the token.
-	 *
-	 * @type {string|string[]}
-	 * @see GrammarToken
-	 * @public
-	 */
 	this.alias = alias;
-	// Copy of the full string this token was created from
 	this.length = (matchedStr || '').length | 0;
 }
-
 
 Token.stringify = function stringify(o, language, options = {}) {
 	const stylesCss = options.styles || styles;
@@ -314,9 +288,14 @@ Token.stringify = function stringify(o, language, options = {}) {
 		attributes += ' ' + name + '="' + (env.attributes[name] || '').replace(/"/g, '&quot;') + '"';
 	}
 
-	return `<${env.tag} class="${env.classes.join(' ')}"${attributes} style="${env.classes.map(c => stylesCss[c] || '').filter(i => i).join(';')}">${env.content}</${env.tag}>`;
+	// 🌸 Marina's Beautiful Styling
+	const tokenStyles = env.classes.map(c => stylesCss[c] || '').filter(i => i).join(';');
+	const marinaStyle = tokenStyles + ';font-family:Monaco,Consolas,"Courier New",monospace;font-size:14px;line-height:1.5;';
+
+	return `<${env.tag} class="${env.classes.join(' ')}"${attributes} style="${marinaStyle}">${env.content}</${env.tag}>`;
 };
 
+// 💫 Marina's Core Library
 const _ = {
 	hooks: {
 		all: {},
@@ -327,11 +306,9 @@ const _ = {
 		},
 		run: function (name, env) {
 			const callbacks = _.hooks.all[name];
-
 			if (!callbacks || !callbacks.length) {
 				return;
 			}
-
 			for (let i = 0, callback; (callback = callbacks[i++]);) {
 				callback(env);
 			}
@@ -354,19 +331,17 @@ const _ = {
 			for (const token in rest) {
 				grammar[token] = rest[token];
 			}
-
 			delete grammar.rest;
 		}
 
 		const tokenList = new LinkedList();
 		addAfter(tokenList, tokenList.head, text);
-
 		matchGrammar(text, tokenList, grammar, tokenList.head, 0);
-
 		return toArray(tokenList);
 	}
 };
 
+// 🌊 Marina's Prism Highlighter
 const Prism = {
 	highlight: function (text, grammar, language, options = {}) {
 		const env = {
@@ -376,7 +351,7 @@ const Prism = {
 		};
 		_.hooks.run('before-tokenize', env);
 		if (!env.grammar) {
-			throw new Error('The language "' + env.language + '" has no grammar.');
+			throw new Error('🌸 The language "' + env.language + '" has no grammar.');
 		}
 		env.tokens = _.tokenize(env.code, env.grammar);
 		_.hooks.run('after-tokenize', env);
@@ -384,8 +359,10 @@ const Prism = {
 	}
 };
 
+// 🎀 Marina's Language Definitions
 Prism.languages = {};
 
+// 🌸 JSON Language with Marina's Colors
 Prism.languages.json = {
 	'property': {
 		pattern: /(^|[^\\])"(?:\\.|[^\\"\r\n])*"(?=\s*:)/,
@@ -411,12 +388,12 @@ Prism.languages.json = {
 	}
 };
 
+// 💫 JavaScript Stack Trace
 Prism.languages.jsstacktrace = {
 	'error-message': {
 		pattern: /^\S.*/m,
 		alias: 'string'
 	},
-
 	'stack-frame': {
 		pattern: /(^[ \t]+)at[ \t].*/m,
 		lookbehind: true,
@@ -425,13 +402,11 @@ Prism.languages.jsstacktrace = {
 				pattern: /^at[ \t]+(?!\s)(?:node\.js|<unknown>|.*(?:node_modules|\(<anonymous>\)|\(<unknown>|<anonymous>$|\(internal\/|\(node\.js)).*/m,
 				alias: 'comment'
 			},
-
 			'filename': {
 				pattern: /(\bat\s+(?!\s)|\()(?:[a-zA-Z]:)?[^():]+(?=:)/,
 				lookbehind: true,
 				alias: 'url'
 			},
-
 			'function': {
 				pattern: /(\bat\s+(?:new\s+)?)(?!\s)[_$a-zA-Z\xA0-\uFFFF<][.$\w\xA0-\uFFFF<>]*/,
 				lookbehind: true,
@@ -439,16 +414,12 @@ Prism.languages.jsstacktrace = {
 					'punctuation': /\./
 				}
 			},
-
 			'punctuation': /[()]/,
-
 			'keyword': /\b(?:at|new)\b/,
-
 			'alias': {
 				pattern: /\[(?:as\s+)?(?!\s)[_$a-zA-Z\xA0-\uFFFF][$\w\xA0-\uFFFF]*\]/,
 				alias: 'variable'
 			},
-
 			'line-number': {
 				pattern: /:\d+(?::\d+)?\b/,
 				alias: 'number',
@@ -460,7 +431,18 @@ Prism.languages.jsstacktrace = {
 	}
 };
 
+// ✨ Aliases
 Prism.languages.jsstack = Prism.languages.jsstacktrace;
 Prism.languages.webmanifest = Prism.languages.json;
+
+// 🌺 Marina's Special Hook for Beautiful Code
+_.hooks.add('wrap', function(env) {
+	if (env.type === 'comment') {
+		env.attributes['title'] = '🌸 Marina\'s Comment';
+	}
+	if (env.type === 'string') {
+		env.attributes['title'] = '💫 Marina\'s String';
+	}
+});
 
 module.exports = Prism;
